@@ -1,0 +1,47 @@
+body{
+    margin: 0 auto;
+    align-content: center;
+}
+
+.card{
+    display: inline-block;
+    width: 25%;
+    margin: 20px 10px;
+}
+
+.container{
+    text-align: center;
+    align-content: center;
+}
+
+.jumbotron{
+    margin-top: 20px;
+}
+
+.fixed-bottom{
+    padding-top: 20px;
+    background-color: white;
+}
+
+.footer{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    align-content: center;
+    text-align: center;
+}
+
+#agregar-liga{
+    width: 60%;
+    margin: 0 auto;
+}
+
+#AgregarEquiposRow{
+    align-content: center;
+}
+
+#form-agregar-equipos{
+    margin: 20px auto;
+    
+}

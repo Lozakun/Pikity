@@ -1,0 +1,40 @@
+<%- include('../includes/header') %>
+<%- include('../includes/navigation') %>
+
+<% console.log(ligaId) %>
+<% const result = ligas.find(liga => liga.id == ligaId); %>
+<% console.log(result.equipos.length) %>
+<div class="row">
+    <div class="col-md-12">
+        <div class="container">
+            <h2>Estas viendo <%= result.nombreLiga %></h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Equipo</th>
+                        <th scope="col">P. Ganados</th>
+                        <th scope="col">P. Empatados</th>
+                        <th scope="col">P. Perdidos</th>
+                        <th scope="col">Goles a Favor</th>
+                        <th scope="col">Goles en Contra</th>
+                        <th scope="col">Diferencia</th>
+                        <th scope="col">Puntos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <% result.equipos.forEach(equipo=>{ %>
+                            <tr>
+                                <td><%= equipo.nombreEquipo %></td>
+                            </tr>
+                        <% }); %>
+                </tbody>
+            </table>
+                <% if(result.equipos.length === 0) { %>
+                    <h3>No existen equipos en esta liga...</h3>
+                    <a href="/ligas/<%= result.id %>/equipos/agrega-equipo" class="btn btn-warning">Agrega Equipos.</a>
+                <% } %>
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/footer') %>

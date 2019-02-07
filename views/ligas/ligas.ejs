@@ -1,0 +1,31 @@
+<%- include('../includes/header') %>
+<%- include('../includes/navigation') %>
+
+<div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+            <% if(!ligas.length > 0){ %>
+                <br>
+                <h1>No Existen Ligas</h1>
+                <a href="ligas/agrega-liga" id='agregar-liga' class="btn btn-success">Agregar Liga</a>
+            <% } else { %>
+                <br>
+                <a href="ligas/agrega-liga" class="btn btn-warning">Agregar Ligas</a>
+                <br><br>
+                
+                <% ligas.forEach((liga) => { %>
+                            <div class="col-sm-3 card" style="width: 18rem;">
+                                    <img class="card-img-top" src="<%= liga.imagenUrl %>" alt="<%= liga.nombreLiga %>">
+                                    <div class="card-body">
+                                    <h5 class="card-title"><%= liga.nombreLiga %></h5>
+                                    <p class="card-text">Para ver las estadisticas de la liga "<%= liga.nombreLiga %>", da clic en el botón debajo.</p>
+                                    <a href="/ligas/<%= liga.id %>" class="btn btn-primary">Ver Estadisticas</a>
+                                    </div>
+                            </div>
+                    
+                <% }) %>
+            <% }%>
+        </div>
+    </div>
+
+<%- include('../includes/footer') %>
