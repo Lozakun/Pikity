@@ -1,0 +1,36 @@
+<%- include('../includes/header') %>
+<%- include('../includes/navigation') %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Agrega los Partidos a las Jornadas</h1>
+
+            <% const liga = ligas.find(liga=>liga.id == ligaId); %>
+                <form action='/partidos/<%= liga.id %>/agregaJornada' method="POST">
+                    <select name="partido[numJornada]">
+                        <% for(let i = 1; i < liga.numEquipos; i++){ %>
+                            <option value="<%=i%>"><%= i %></option>
+                        <% } %>
+                    </select>
+                    <% for(let j = 0; j < (liga.numEquipos/2); j++){ %>
+                        <select name="partido[equipoLocal]">
+                            <% liga.equipos.forEach(equipo=>{ %>
+                                <option value='<%= equipo.idEquipo %>'><%= equipo.nombreEquipo %></option>
+                            <% }); %>
+                        </select>
+                        <select name="partido[equipoVisita]">
+                                <% liga.equipos.forEach(equipo=>{ %>
+                                    <option value='<%= equipo.idEquipo %>'><%= equipo.nombreEquipo %></option>
+                                <% }); %>
+                        </select>
+                        <input type="date" name="partido[fecha]" required>
+                        <input type="datetime" name="partido[hora]" required><br>
+                    <% } %> 
+                    <input type="submit" class="btn btn-primary" value="Guardar">
+                </form>
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/header') %>
