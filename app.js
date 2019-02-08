@@ -5,6 +5,8 @@ const app = express();
 const Liga = require('./models/liga.js');
 const ligas = [];
 const Equipo = require('./models/equipo.js');
+const Jornada = require('./models/jornada.js');
+const Partido = require('./models/partidos.js');
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -67,6 +69,26 @@ app.get('/ligas/:idLiga/equipos/agrega-equipo', (req, res, next) => {
     const liga = ligas.find(liga=>liga.id == req.params.idLiga);
     res.render('equipos/agrega-equipos', {path: 'ligas', liga: liga});
     console.log(liga);
+});
+
+app.get('/partidos/:id', (req, res, next)=>{
+    const ligaId = req.params.id;
+    res.render('partidos/agregar-partidos', {path: 'ligas', ligas: ligas, ligaId: ligaId});
+});
+
+app.post('/partidos/:idLiga/agregaJornada', (req, res, next)=>{
+    const numJornada = req.body.numJornada;
+    const idLiga = req.body.idLiga;
+    const jornada = new Jornada(numJornada, idLiga);
+
+    const equipoLocal = req.body.equipoLocal;
+    const equipoVisitante = req.body.equipoVisitante;
+
+    //estoy generando el partido, agregando correctamente el constructor del partido.
+    const partido = new partido(partido.numJornada[i], partido.idLiga, fecha, hora, equipoLocal, equipoVisita, golesLocal, golesVisita);
+
+    console.log(jornada);
+    console.log(partido);
 });
 
 app.get('/quinielas', (req, res, next) => {
