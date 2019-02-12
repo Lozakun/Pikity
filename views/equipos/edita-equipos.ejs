@@ -4,20 +4,19 @@
 <div class="container AgregarEquiposRow">
     <div class="row" id="AgregarEquiposRow">
         <div class="col-sm-4" id="form-agregar-equipos">
-            <form class="form-group" action="/ligas/<%= liga.id %>/equipos" method="POST">
+            <form class="form-group" action="/ligas/<%= liga.id %>/equipos/editar?_method=PUT" method="POST">
                     <% for(let i = 0; i < liga.numEquipos; i++){ %>
                         <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Equipo <%= i+1 %></span>
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Equipo <%= 1+i %></span>
                                 </div>
-                                <input type="text" class="form-control" name="equipo[<%= i %>]" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+                                <input type="text" class="form-control" name="equipo[<%= i %>]" value='<%= liga.equipos[i].nombreEquipo %>' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
                         </div>
                     <% } %>
-                    <input class="btn btn-success" type="submit" value="Agregar Equipos">
+                    <input class="btn btn-success" type="submit" value="Guardar">
             </form>
         </div>
     </div>
 </div>
-
 
 <%- include('../includes/header') %>

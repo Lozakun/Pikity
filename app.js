@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require("express");
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const app = express();
 const Liga = require('./models/liga.js');
 const ligas = [];
@@ -13,6 +14,7 @@ app.set('views', 'views');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'))
 
 app.get('/', (req, res, next) => {
     res.render('index', {path: 'index', ligas: ligas} );
@@ -69,6 +71,26 @@ app.get('/ligas/:idLiga/equipos/agrega-equipo', (req, res, next) => {
     const liga = ligas.find(liga=>liga.id == req.params.idLiga);
     res.render('equipos/agrega-equipos', {path: 'ligas', liga: liga});
     console.log(liga);
+});
+
+app.get('/partidos/:idLiga/editar', (req, res, next)=>{
+    console.log(req.params.idLiga);
+    const liga = ligas.find(liga=>liga.id == req.params.idLiga);
+    res.render('equipos/edita-equipos',{ path: 'ligas', liga: liga});
+});
+
+app.put('/ligas/:idLiga/equipos/editar', (req, res, next)=>{
+    const idLiga = req.params.idLiga;
+    const liga = ligas.find(liga=>liga.id == idLiga);
+    
+    for(let i = 0; i < req.body.equipo.length; i++){
+        console.log(liga.equipos[i].nombreEquipo);
+        console.log(req.body.equipo[i].nombreEquipo);
+        if (liga.equipos[i].nombreEquipo != req.body.equipo[i].nombreEquipo){
+            liga.equipos[i].nombreEquipo = req.body.equipo[i].nombreEquipo;
+        }
+    }
+    res.render('ligas/ver-liga', {ligas: ligas, path: 'ligas', ligaId: idLiga});
 });
 
 app.get('/partidos/:id', (req, res, next)=>{

@@ -9,7 +9,7 @@
         <div class="container">
                 <% if(result.equipos.length === 0) { %>
                     <h3>No existen equipos en esta liga...</h3>
-                    <a href="/ligas/<%= result.id %>/equipos/agrega-equipo" class="btn btn-warning">Agrega Equipos.</a>
+                    <a href="/ligas/<%= result.id %>/equipos/agrega-equipo" class="btn btn-success">Agrega Equipos.</a>
                 <% } else { %>
                     <% if (result.equipos.length < result.numEquipos){ %>
                         <a href="/ligas/<%= result.id %>/equipos/agrega-equipo" class="btn btn-warning">Agrega Equipos Restantes</a>
@@ -45,8 +45,11 @@
                         </tbody>
                     </table>
                 <% } %>
-
-                <a class="btn btn-success" href="/partidos/<%= result.id %>">Calendario</a>
+                <% if(result.equipos.length > 0){ %>
+                    <a class="btn btn-success" href="/partidos/<%= result.id %>">Calendario</a>
+                    <a class="btn btn-warning" href="/partidos/<%= result.id %>/editar">Editar</a>
+                <% } %>
+                
         </div>
     </div>
 </div>
