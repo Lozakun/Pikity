@@ -2,35 +2,74 @@
 <%- include('../includes/navigation') %>
 
 <div class="container">
-    <div class="row">
+    <div class="row" id="AgregarEquiposRow">
         <div class="col-md-12">
             <h1>Agrega los Partidos a las Jornadas</h1>
-
+        </div>
+    </div>
+    <div class="row" id="AgregarEquiposRow">
+        <div class="container col-md-4">
             <% const liga = ligas.find(liga=>liga.id == ligaId); %>
-                <form action='/partidos/<%= liga.id %>/agregaJornada' method="POST">
-                    <select name="partido[numJornada]">
-                        <% for(let i = 1; i < liga.numEquipos; i++){ %>
-                            <option value="<%=i%>"><%= i %></option>
-                        <% } %>
-                    </select>
-                    <% for(let j = 0; j < (liga.numEquipos/2); j++){ %>
-                        <select name="partido[equipoLocal]">
-                            <% liga.equipos.forEach(equipo=>{ %>
-                                <option value='<%= equipo.idEquipo %>'><%= equipo.nombreEquipo %></option>
-                            <% }); %>
-                        </select>
-                        <select name="partido[equipoVisita]">
+                <form id="form-group" action='/partidos/<%= liga.id %>/agregaJornada' method="POST">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputJornada">Jornada</label>
+                            </div>
+                                <select name="partido[numJornada]" class="custom-select" id="inputJornada">
+                                    <% for(let i = 1; i < liga.numEquipos; i++){ %>
+                                        <option value="<%=i%>"><%= i %></option>
+                                    <% } %>
+                                </select>                   
+                        </div>
+        </div>
+        <div class="row">
+            <% for(let j = 0; j < (liga.numEquipos/2); j++){ %>
+                <div class="container col-sm-4" id="form-equipos">
+                    
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="EquipoLocal">Equipo Local</label>
+                            </div>
+                            <select name="partido[equipoLocal]" class="custom-select" id="EquipoLocal">
                                 <% liga.equipos.forEach(equipo=>{ %>
                                     <option value='<%= equipo.idEquipo %>'><%= equipo.nombreEquipo %></option>
                                 <% }); %>
-                        </select>
-                        <input type="date" name="partido[fecha]" required>
-                        <input type="datetime" name="partido[hora]" required><br>
-                    <% } %> 
-                    <input type="submit" class="btn btn-primary" value="Guardar">
-                </form>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="EquipoVisita">Equipo Visita</label>
+                            </div>
+                            <select name="partido[equipoVisita]" class="custom-select" id="EquipoVisita">
+                                <% liga.equipos.forEach(equipo=>{ %>
+                                    <option value='<%= equipo.idEquipo %>'><%= equipo.nombreEquipo %></option>
+                                <% }); %>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="fechaPartido">Fecha</label>
+                            </div>
+                            <input type="date" class="form-control" name="partido[fecha]" id="fechaPartido" required>
+                        </div>   
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="horaPartido">Hora</label>
+                            </div>
+                            <input type="datetime" class="form-control" name="partido[hora]" id="horaPartido" required><br>
+                        </div>
+                </div>
+            <% } %> 
+            
         </div>
+    </div>
+        <div class="row">
+            <div class="col-md-6" id="form-equipos">
+                <input type="submit" class="btn btn-primary btn-block" value="Guardar">
+            </div>
+        </div>
+        </form>
     </div>
 </div>
 
-<%- include('../includes/header') %>
+<%- include('../includes/footer') %>

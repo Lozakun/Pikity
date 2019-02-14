@@ -3,7 +3,7 @@
 
 <div class="container AgregarEquiposRow">
     <div class="row" id="AgregarEquiposRow">
-        <div class="col-sm-4" id="form-agregar-equipos">
+        <div class="col-sm-4" id="form-equipos">
             <form class="form-group" action="/ligas/<%= liga.id %>/equipos/editar?_method=PUT" method="POST">
                     <% for(let i = 0; i < liga.numEquipos; i++){ %>
                         <div class="input-group mb-3">
@@ -19,4 +19,4 @@
     </div>
 </div>
 
-<%- include('../includes/header') %>
+<%- include('../includes/footer') %>

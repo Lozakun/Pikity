@@ -1,6 +1,13 @@
 body{
-    margin: 0 auto;
+    margin: auto;
+    margin-top: 50px;
     align-content: center;
+}
+
+.container.navegacion.fixed-top{
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
 }
 
 .card{
@@ -12,19 +19,29 @@ body{
 .container{
     text-align: center;
     align-content: center;
+    padding-bottom: 70px;
 }
 
 .jumbotron{
-    margin-top: 20px;
+    margin: 100px;
 }
 
-.fixed-bottom{
-    padding-top: 20px;
+.bottom-fixed{
+    margin-top: 20px;
     background-color: white;
+    padding-top: 10px;
+    padding-bottom: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    position: fixed;
+    align-content: center;
+    text-align: center;
 }
 
 .footer{
     position: absolute;
+    padding-top: 20px;
     right: 0;
     bottom: 0;
     left: 0;
@@ -33,7 +50,6 @@ body{
 }
 
 #agregar-liga{
-    width: 60%;
     margin: 0 auto;
 }
 
@@ -41,7 +57,8 @@ body{
     align-content: center;
 }
 
-#form-agregar-equipos{
+#form-equipos{
     margin: 20px auto;
-    
+    width: 60%;
 }
+

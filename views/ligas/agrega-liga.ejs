@@ -2,44 +2,47 @@
 <%- include('../includes/navigation') %>
 
 <div class="container">
-    <br>
-    <h1>Agregar Liga</h1>
-    <br><br>
-    <div class="agregar-liga">
-        <form action="/ligas" method="POST">
-            <div class="form-group">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="nombreliga">Nombre Liga</span>
-                    </div>
-                    <input class="form-control" type="text" name="nombreLiga" placeholder="Nombre de la liga" aria-describedby="nombreliga">
-                </div>
-    
-                <div class="input-group mb-3">        
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="imagenUrl">Imagen URL</span>
+    <div class="row">
+        <div class="col-sm-4" id="agregar-liga>
+        <br>
+        <h1>Agregar Liga</h1>
+        <br><br>
+            <div class="agregar-liga">
+                <form class="form-equipo" action="/ligas" method="POST">
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="nombreliga">Nombre Liga</span>
+                            </div>
+                            <input class="form-control" type="text" name="nombreLiga" placeholder="Nombre de la liga" aria-describedby="nombreliga">
                         </div>
-                        <input class="form-control" type="text" name="imagenUrl" placeholder="URL de la Imagen" aria-describedby="imagenUrl">
-                </div>
-
-                <div class="input-group mb-3">        
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="numeroEquipos">Numero de Equipos</span>
+            
+                        <div class="input-group mb-3">        
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="imagenUrl">Imagen URL</span>
+                                </div>
+                                <input class="form-control" type="text" name="imagenUrl" placeholder="URL de la Imagen" aria-describedby="imagenUrl">
                         </div>
-                        <input class="form-control" type="number" name="numeroEquipos" placeholder="Numero de Equipos" aria-describedby="numeroEquipos" maxlength="2" min="1" max="20">
-                </div>
 
-                <div class="input-group mb-3"> 
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="temporada">temporada</span>
+                        <div class="input-group mb-3">        
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="numeroEquipos">Numero de Equipos</span>
+                                </div>
+                                <input class="form-control" type="number" name="numeroEquipos" placeholder="Numero de Equipos" aria-describedby="numeroEquipos" maxlength="2" min="1" max="20">
+                        </div>
+
+                        <div class="input-group mb-3"> 
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="temporada">temporada</span>
+                            </div>
+                            <input class="form-control" type="text" name="temporada" placeholder="Temporada" aria-describedby="temporada">
+                        </div>
+                        <input type="hidden" name="equipos" value="">
+
+                        <input class="btn btn-warning" type="submit" value="Agregar">
                     </div>
-                    <input class="form-control" type="text" name="temporada" placeholder="Temporada" aria-describedby="temporada">
-                </div>
-                <input type="hidden" name="equipos" value="">
-
-                <input class="btn btn-warning" type="submit" value="Agregar">
+                </form>     
             </div>
-        </form>     
     </div>
 </div>
 

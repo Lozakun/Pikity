@@ -82,12 +82,12 @@ app.get('/partidos/:idLiga/editar', (req, res, next)=>{
 app.put('/ligas/:idLiga/equipos/editar', (req, res, next)=>{
     const idLiga = req.params.idLiga;
     const liga = ligas.find(liga=>liga.id == idLiga);
-    
+    console.log(req.body.equipo);
     for(let i = 0; i < req.body.equipo.length; i++){
         console.log(liga.equipos[i].nombreEquipo);
-        console.log(req.body.equipo[i].nombreEquipo);
-        if (liga.equipos[i].nombreEquipo != req.body.equipo[i].nombreEquipo){
-            liga.equipos[i].nombreEquipo = req.body.equipo[i].nombreEquipo;
+        console.log(req.body.equipo[i]);
+        if (liga.equipos[i].nombreEquipo != req.body.equipo[i]){
+            liga.equipos[i].nombreEquipo = req.body.equipo[i];
         }
     }
     res.render('ligas/ver-liga', {ligas: ligas, path: 'ligas', ligaId: idLiga});
