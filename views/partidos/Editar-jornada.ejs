@@ -16,9 +16,9 @@
                                 <label class="input-group-text" for="inputJornada">Jornada</label>
                             </div>
                                 <select name="partido[numJornada]" class="custom-select" id="inputJornada">
-                                    <% for(let i = 1; i < liga.numEquipos; i++){ %>
-                                        <option value="<%=i%>"><%= i %></option>
-                                    <% } %>
+                                    
+                                        <option value="<%=jornada%>"><%= jornada.numJornada %></option>
+                                    
                                 </select>                   
                         </div>
         </div>
@@ -30,9 +30,10 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="EquipoLocal">Equipo Local</label>
                             </div>
-                            <select name="partido[equipoLocal][j]" class="custom-select" id="EquipoLocal">
+                            <% let equipoLocal = liga.equipos.find(equipoLocal => equipoLocal.idEquipo == jornada.partidos[j].equipoLocal); %>
+                            <select name="partido[equipoLocal][j]" class="custom-select" id="EquipoLocal" value="<%= equipoLocal.nombreEquipo %>">
                                 <% liga.equipos.forEach(equipo=>{ %>
-                                    <option value='<%= equipo.idEquipo %>'><%= equipo.nombreEquipo %></option>
+                                    <option value='<%= equipo.idEquipo %>'><%= equipoLocal.nombreEquipo %></option>
                                 <% }); %>
                             </select>
                 </div>
@@ -40,7 +41,8 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="EquipoVisita">Equipo Visita</label>
                             </div>
-                            <select name="partido[equipoVisita][j]" class="custom-select" id="EquipoVisita">
+                            <% let equipoVisita = liga.equipos.find(equipoVisita => equipoVisita.idEquipo == jornada.partidos[j].equipoVisita); %>
+                            <select name="partido[equipoVisita][j]" class="custom-select" id="EquipoVisita" value="<% if( %><%= equipoVisita.nombreEquipo %><% == %><%= equipo.nombreEquipo %><% ) { %> <%= equipoVisita.nombreEquipo %>" <% } %>>
                                 <% liga.equipos.forEach(equipo=>{ %>
                                     <option value='<%= equipo.idEquipo %>'><%= equipo.nombreEquipo %></option>
                                 <% }); %>
@@ -50,13 +52,13 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="fechaPartido">Fecha</label>
                             </div>
-                            <input type="date" class="form-control" name="partido[fecha][j]" id="fechaPartido" required>
+                            <input type="date" class="form-control" name="partido[fecha][j]" id="fechaPartido" value="<%= jornada.partidos[j].fecha %>" required>
                 </div>   
                 <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="horaPartido">Hora</label>
                             </div>
-                            <input type="datetime" class="form-control" name="partido[hora][j]" id="horaPartido" required><br>
+                            <input type="datetime" class="form-control" name="partido[hora][j]" id="horaPartido" value='<%= jornada.partidos[j].hora %>' required><br>
                 </div>
             </div>
         <% } %>         

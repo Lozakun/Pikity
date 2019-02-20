@@ -110,7 +110,7 @@ app.post('/partidos/:idLiga/agregaJornada', (req, res, next)=>{
         jornada.partidos.push(partido);
     }
     console.log(jornada);
-    res.render("partidos/ver-calendario", {path: 'ligas', ligas: ligas, ligaId: idLiga, jornada: jornada});
+    res.render("partidos/editar-jornada", {path: 'ligas', ligas: ligas, ligaId: idLiga, jornada: jornada});
 });
 
 app.get('/quinielas', (req, res, next) => {
