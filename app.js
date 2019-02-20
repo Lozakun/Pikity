@@ -61,7 +61,7 @@ app.post('/ligas/:id/equipos', (req, res, next) =>{
         let equipo = new Equipo(req.body.equipo[i]);
         liga.equipos.push(equipo);
     }
-    console.log(liga.equipos);
+    console.log("se agregan equipos a Liga");
 
     res.render('ligas/ver-liga', {ligas: ligas, path: 'ligas', ligaId: liga.id});
 });
@@ -70,7 +70,7 @@ app.get('/ligas/:idLiga/equipos/agrega-equipo', (req, res, next) => {
     console.log("agregar equipos aqui");
     const liga = ligas.find(liga=>liga.id == req.params.idLiga);
     res.render('equipos/agrega-equipos', {path: 'ligas', liga: liga});
-    console.log(liga);
+    console.log("equipos agregados!!");
 });
 
 app.get('/partidos/:idLiga/editar', (req, res, next)=>{
@@ -99,18 +99,18 @@ app.get('/partidos/:id', (req, res, next)=>{
 });
 
 app.post('/partidos/:idLiga/agregaJornada', (req, res, next)=>{
-    const numJornada = req.body.numJornada;
-    const idLiga = req.body.idLiga;
+    console.log("Entro al Post de Jornada");
+    const numJornada = req.body.partido.numJornada;
+    const idLiga = req.params.idLiga;
     const jornada = new Jornada(numJornada, idLiga);
 
-    const equipoLocal = req.body.equipoLocal;
-    const equipoVisitante = req.body.equipoVisitante;
-
-    //estoy generando el partido, agregando correctamente el constructor del partido.
-    const partido = new partido(partido.numJornada[i], partido.idLiga, fecha, hora, equipoLocal, equipoVisita, golesLocal, golesVisita);
-
+    for (let i = 0; i < req.body.partido.equipoLocal.length; i++){
+        const partido = new Partido(jornada.numJornada, idLiga, req.body.partido.fecha[i], req.body.partido.hora[i], req.body.partido.equipoLocal[i], req.body.partido.equipoVisita[i]);
+        console.log(partido);
+        jornada.partidos.push(partido);
+    }
     console.log(jornada);
-    console.log(partido);
+    res.render("partidos/ver-calendario", {path: 'ligas', ligas: ligas, ligaId: idLiga, jornada: jornada});
 });
 
 app.get('/quinielas', (req, res, next) => {

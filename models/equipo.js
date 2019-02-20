@@ -1,5 +1,6 @@
 module.exports = class Equipo{
     constructor(nombreEquipo){
+        this.idEquipo = Math.random();
         this.nombreEquipo = nombreEquipo;
         this.partidosJugados = 0;
         this.partidosGanados = 0;

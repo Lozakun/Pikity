@@ -1,6 +1,6 @@
 body{
     margin: auto;
-    margin-top: 50px;
+    margin-top: 70px;
     align-content: center;
 }
 
@@ -11,15 +11,21 @@ body{
 }
 
 .card{
+    width: 60px;
     display: inline-block;
     width: 25%;
     margin: 20px 10px;
 }
 
+.card.img{
+    width: 100%;
+
+}
+
 .container{
     text-align: center;
     align-content: center;
-    padding-bottom: 70px;
+    padding-bottom: 10px;
 }
 
 .jumbotron{
@@ -50,7 +56,8 @@ body{
 }
 
 #agregar-liga{
-    margin: 0 auto;
+    text-align: center;
+    align-content: center;
 }
 
 #AgregarEquiposRow{

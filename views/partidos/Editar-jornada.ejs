@@ -4,23 +4,23 @@
 <div class="container">
     <div class="row" id="AgregarEquiposRow">
         <div class="col-md-12">
-            <h1>Agrega los Partidos a las Jornadas</h1>
+            <h1>Calendario Liga</h1>
         </div>
     </div>
     <div class="row" id="AgregarEquiposRow">
         <div class="container col-md-4">
             <% const liga = ligas.find(liga=>liga.id == ligaId); %>
-            <form id="form-group" action='/partidos/<%= liga.id %>/agregaJornada' method="POST">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputJornada">Jornada</label>
-                    </div>
-                    <select name="partido[numJornada]" class="custom-select" id="inputJornada">
-                    <% for(let i = 1; i < liga.numEquipos; i++){ %>
-                        <option value="<%=i%>"><%= i %></option>
-                    <% } %>
-                    </select>                   
-                </div>
+                <form id="form-group" action='/partidos/<%= liga.id %>/agregaJornada' method="POST">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputJornada">Jornada</label>
+                            </div>
+                                <select name="partido[numJornada]" class="custom-select" id="inputJornada">
+                                    <% for(let i = 1; i < liga.numEquipos; i++){ %>
+                                        <option value="<%=i%>"><%= i %></option>
+                                    <% } %>
+                                </select>                   
+                        </div>
         </div>
     </div>
     <div class="row">
@@ -30,9 +30,9 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="EquipoLocal">Equipo Local</label>
                             </div>
-                            <select name="partido[equipoLocal]" class="custom-select" id="EquipoLocal">
+                            <select name="partido[equipoLocal][j]" class="custom-select" id="EquipoLocal">
                                 <% liga.equipos.forEach(equipo=>{ %>
-                                    <option value="<%= equipo.idEquipo %>"><%= equipo.nombreEquipo %></option>
+                                    <option value='<%= equipo.idEquipo %>'><%= equipo.nombreEquipo %></option>
                                 <% }); %>
                             </select>
                 </div>
@@ -40,9 +40,9 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="EquipoVisita">Equipo Visita</label>
                             </div>
-                            <select name="partido[equipoVisita]" class="custom-select" id="EquipoVisita">
+                            <select name="partido[equipoVisita][j]" class="custom-select" id="EquipoVisita">
                                 <% liga.equipos.forEach(equipo=>{ %>
-                                    <option value="<%= equipo.idEquipo %>""><%= equipo.nombreEquipo %></option>
+                                    <option value='<%= equipo.idEquipo %>'><%= equipo.nombreEquipo %></option>
                                 <% }); %>
                             </select>
                 </div>
@@ -50,13 +50,13 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="fechaPartido">Fecha</label>
                             </div>
-                            <input type="date" class="form-control" name="partido[fecha]" id="fechaPartido" required>
+                            <input type="date" class="form-control" name="partido[fecha][j]" id="fechaPartido" required>
                 </div>   
                 <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="horaPartido">Hora</label>
                             </div>
-                            <input type="datetime" class="form-control" name="partido[hora]" id="horaPartido" required><br>
+                            <input type="datetime" class="form-control" name="partido[hora][j]" id="horaPartido" required><br>
                 </div>
             </div>
         <% } %>         
