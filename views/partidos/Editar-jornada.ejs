@@ -33,7 +33,11 @@
                             <% let equipoLocal = liga.equipos.find(equipoLocal => equipoLocal.idEquipo == jornada.partidos[j].equipoLocal); %>
                             <select name="partido[equipoLocal][j]" class="custom-select" id="EquipoLocal" value="<%= equipoLocal.nombreEquipo %>">
                                 <% liga.equipos.forEach(equipo=>{ %>
-                                    <option value='<%= equipo.idEquipo %>'><%= equipo.nombreEquipo %></option>
+                                    <% if(equipo.nombreEquipo == equipoLocal.nombreEquipo) {%>
+                                        <option value='<%= equipo.idEquipo %>' selected><%= equipoLocal.nombreEquipo %></option>
+                                    <%} else { %>
+                                        <option value='<%= equipo.idEquipo %>'><%= equipo.nombreEquipo %></option>
+                                    <% } %>
                                 <% }); %>
                             </select>
                 </div>
@@ -42,9 +46,13 @@
                                 <label class="input-group-text" for="EquipoVisita">Equipo Visita</label>
                             </div>
                             <% let equipoVisita = liga.equipos.find(equipoVisita => equipoVisita.idEquipo == jornada.partidos[j].equipoVisita); %>
-                            <select name="partido[equipoVisita][j]" class="custom-select" id="EquipoVisita" value="<% if(equipoVisita == jornada.partidos[j].equipoVisita){%> <%= equipoVisita %> <%}%>">
+                            <select name="partido[equipoVisita][j]" class="custom-select" id="EquipoVisita">
                                 <% liga.equipos.forEach(equipo=>{ %>
-                                    <option value='<%= equipo.idEquipo %>'><%= equipo.nombreEquipo %></option>
+                                    <% if(equipo.nombreEquipo == equipoVisita.nombreEquipo) {%>
+                                        <option value='<%= equipo.idEquipo %>' selected><%= equipo.nombreEquipo %></option>
+                                    <%} else { %>
+                                        <option value='<%= equipo.idEquipo %>'><%= equipo.nombreEquipo %></option>
+                                    <% } %>
                                 <% }); %>
                             </select>
                 </div>

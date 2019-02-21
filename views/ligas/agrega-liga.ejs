@@ -2,50 +2,48 @@
 <%- include('../includes/navigation') %>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <br>
-            <h1>Agregar Liga</h1>
-            <br><br>
-        </div>
-    </div>
-        <div class="row">
-            <div class="col-sm-4" id="form-equipos">
+    <div class="row" id="AgregarEquiposRow">
+        <div class="col-sm-4" id="form-equipos">
+        <br>
+        <h1>Agregar Liga</h1>
+        <br><br>
+            <div class="agregar-liga">
                 <form class="form-group" action="/ligas" method="POST">
+                    <div class="form-group">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="nombreliga">Nombre Liga</span>
                             </div>
-                            <input class="form-control" type="text" name="nombreLiga" placeholder="Nombre de la liga" aria-describedby="nombreliga">
+                            <input class="form-control" type="text" name="nombreLiga" placeholder="Nombre de la liga" aria-describedby="nombreliga" required>
                         </div>
             
                         <div class="input-group mb-3">        
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="imagenUrl">Imagen URL</span>
                                 </div>
-                                <input class="form-control" type="text" name="imagenUrl" placeholder="URL de la Imagen" aria-describedby="imagenUrl">
+                                <input class="form-control" type="text" name="imagenUrl" placeholder="URL de la Imagen" aria-describedby="imagenUrl" required>
                         </div>
 
                         <div class="input-group mb-3">        
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="numeroEquipos">Numero de Equipos</span>
                                 </div>
-                                <input class="form-control" type="number" name="numeroEquipos" placeholder="Numero de Equipos" aria-describedby="numeroEquipos" maxlength="2" min="1" max="20">
+                                <input class="form-control" type="number" name="numeroEquipos" placeholder="Numero de Equipos" aria-describedby="numeroEquipos" maxlength="2" min="1" max="20" required>
                         </div>
 
                         <div class="input-group mb-3"> 
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="temporada">temporada</span>
                             </div>
-                            <input class="form-control" type="text" name="temporada" placeholder="Temporada" aria-describedby="temporada">
+                            <input class="form-control" type="text" name="temporada" placeholder="Temporada" aria-describedby="temporada" required>
                         </div>
                         <input type="hidden" name="equipos" value="">
 
-                        <input class="btn btn-warning" type="submit" value="Agregar">
+                        <input class="btn btn-success" type="submit" value="Agregar">
+                    </div>
                 </form>     
             </div>
-        
-    
+    </div>
 </div>
 
 <%- include('../includes/footer') %>

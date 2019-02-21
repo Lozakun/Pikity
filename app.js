@@ -113,6 +113,11 @@ app.post('/partidos/:idLiga/agregaJornada', (req, res, next)=>{
     res.render("partidos/editar-jornada", {path: 'ligas', ligas: ligas, ligaId: idLiga, jornada: jornada});
 });
 
+app.put('/partidos/:idLiga/editarJornada', (req, res, next)=>{
+    //vamos a ingresar aqui el guardado
+    //enviar a ruta de ver calendario
+});
+
 app.get('/quinielas', (req, res, next) => {
     res.render('quinielas/quiniela', {path: 'quiniela', ligas: ligas});
 });
