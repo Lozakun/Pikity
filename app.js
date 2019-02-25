@@ -132,6 +132,6 @@ app.get('/quinielas', (req, res, next) => {
 });
 
 //app.listen(process.env.PORT, (err) => {
-app.listen(4000, (err) => {
+app.listen(process.env.PORT || 4000, (err) => {
     console.log("servidor escuchando");
 });
