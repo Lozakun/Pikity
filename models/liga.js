@@ -7,5 +7,6 @@ module.exports = class Liga {
     this.numEquipos = numEquipos;
     this.temp = temp;
     this.equipos = [];
+    this.jornadas = [];
   }
 }

@@ -1,0 +1,30 @@
+<%- include('../includes/header') %>
+<%- include('../includes/navigation') %>
+
+<% const liga = ligas.find(liga => liga.id == ligaId); %>
+<div class="row">
+    <div class="col-md-12">
+        <div class="container">
+            <label><%= liga.nombreLiga %></label>
+            <hr>
+            <% liga.jornadas.forEach(jornada => { %>
+                <% for(let i = 0; i < jornada.partidos.length; i++){ %>
+                    <label>Jornada <%=jornada.numJornada%></label>
+                    <br>
+                    <% for(let j = 0; j < jornada.partidos.length; j++){ %>
+                        <% let equipoLocal = liga.equipos.find(equipo => equipo.idEquipo == jornada.partidos[j].equipoLocal)%>
+                            <label><%= equipoLocal.nombreEquipo %></label>
+                            <input type="number" value = "<%= jornada.partidos[j].golesLocal %>">
+                        <% let equipoVisita = liga.equipos.find(equipo => equipo.idEquipo == jornada.partidos[j].equipoVisita) %>
+                            <input type="number" value = "<%= jornada.partidos[j].golesVisita %>">
+                            <label><%= equipoVisita.nombreEquipo %></label>
+                            <br><br>
+                    <% } %>            
+                <% } %>
+            <% }); %>
+            <a class="btn btn-success" href="/partidos/<%= liga.id %>">Agregar Jornada</a>
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/footer') %>

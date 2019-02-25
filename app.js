@@ -102,6 +102,7 @@ app.post('/partidos/:idLiga/agregaJornada', (req, res, next)=>{
     console.log("Entro al Post de Jornada");
     const numJornada = req.body.partido.numJornada;
     const idLiga = req.params.idLiga;
+    const liga = ligas.find(liga=>liga.id == idLiga);
     const jornada = new Jornada(numJornada, idLiga);
 
     for (let i = 0; i < req.body.partido.equipoLocal.length; i++){
@@ -109,8 +110,9 @@ app.post('/partidos/:idLiga/agregaJornada', (req, res, next)=>{
         console.log(partido);
         jornada.partidos.push(partido);
     }
+    liga.jornadas.push(jornada);
     console.log(jornada);
-    res.render("partidos/editar-jornada", {path: 'ligas', ligas: ligas, ligaId: idLiga, jornada: jornada});
+    res.render("partidos/ver-calendario", {path: 'ligas', ligas: ligas, ligaId: idLiga, jornada: jornada});
 });
 
 app.put('/partidos/:idLiga/editarJornada', (req, res, next)=>{
@@ -118,10 +120,18 @@ app.put('/partidos/:idLiga/editarJornada', (req, res, next)=>{
     //enviar a ruta de ver calendario
 });
 
+app.get('/partidos/:idLiga/ver-calendario', (req, res, next)=>{
+    const idLiga = req.params.idLiga;
+    const liga = ligas.find(liga => liga.id == idLiga);
+    let jornada = liga.jornadas;
+    res.render('partidos/ver-calendario', {path: 'ligas', ligas: ligas, ligaId: idLiga, jornada: jornada});
+});
+
 app.get('/quinielas', (req, res, next) => {
     res.render('quinielas/quiniela', {path: 'quiniela', ligas: ligas});
 });
 
-app.listen(process.env.PORT, (err) => {
+//app.listen(process.env.PORT, (err) => {
+app.listen(4000, (err) => {
     console.log("servidor escuchando");
 });

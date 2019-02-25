@@ -47,7 +47,11 @@
                     </table>
                 <% } %>
                 <% if(result.equipos.length > 0){ %>
-                    <a class="btn btn-success" href="/partidos/<%= result.id %>">Calendario</a>
+                    <% if( result.jornadas.length > 0 ) { %>
+                        <a class="btn btn-success" href="/partidos/<%= result.id %>/ver-calendario">Calendario</a>
+                    <% } else { %>
+                        <a class="btn btn-success" href="/partidos/<%= result.id %>">Calendario</a>
+                    <% } %>
                     <a class="btn btn-warning" href="/partidos/<%= result.id %>/editar">Editar</a>
                 <% } %>
                 
