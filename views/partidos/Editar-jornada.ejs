@@ -9,15 +9,14 @@
     </div>
     <div class="row" id="AgregarEquiposRow">
         <div class="container col-md-4">
-            <% const liga = ligas.find(liga=>liga.id == ligaId); %>
-                <form id="form-group" action='/partidos/<%= liga.id %>/agregaJornada' method="POST">
+                <form id="form-group" action='/partidos/<%= liga.id %>/editar-jornada/<%= jornada[0].numJornada %>?_method=PUT' method="POST">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="inputJornada">Jornada</label>
                             </div>
                                 <select name="partido[numJornada]" class="custom-select" id="inputJornada">
                                     
-                                        <option value="<%=jornada%>"><%= jornada.numJornada %></option>
+                                        <option selected><%= jornada[0].numJornada %></option>
                                     
                                 </select>                   
                         </div>
@@ -30,8 +29,9 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="EquipoLocal">Equipo Local</label>
                             </div>
-                            <% let equipoLocal = liga.equipos.find(equipoLocal => equipoLocal.idEquipo == jornada.partidos[j].equipoLocal); %>
-                            <select name="partido[equipoLocal][j]" class="custom-select" id="EquipoLocal" value="<%= equipoLocal.nombreEquipo %>">
+                            
+                            <% let equipoLocal = liga.equipos.find(equipo => equipo.idEquipo == jornada[0].partidos[j].equipoLocal); %>
+                            <select name="partido[equipoLocal][<%=j%>]" class="custom-select" id="EquipoLocal" value="<%= equipoLocal.nombreEquipo %>">
                                 <% liga.equipos.forEach(equipo=>{ %>
                                     <% if(equipo.nombreEquipo == equipoLocal.nombreEquipo) {%>
                                         <option value='<%= equipo.idEquipo %>' selected><%= equipoLocal.nombreEquipo %></option>
@@ -45,8 +45,8 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="EquipoVisita">Equipo Visita</label>
                             </div>
-                            <% let equipoVisita = liga.equipos.find(equipoVisita => equipoVisita.idEquipo == jornada.partidos[j].equipoVisita); %>
-                            <select name="partido[equipoVisita][j]" class="custom-select" id="EquipoVisita">
+                            <% let equipoVisita = liga.equipos.find(equipo => equipo.idEquipo == jornada[0].partidos[j].equipoVisita); %>
+                            <select name="partido[equipoVisita][<%=j%>]" class="custom-select" id="EquipoVisita">
                                 <% liga.equipos.forEach(equipo=>{ %>
                                     <% if(equipo.nombreEquipo == equipoVisita.nombreEquipo) {%>
                                         <option value='<%= equipo.idEquipo %>' selected><%= equipo.nombreEquipo %></option>
@@ -60,13 +60,13 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="fechaPartido">Fecha</label>
                             </div>
-                            <input type="date" class="form-control" name="partido[fecha][j]" id="fechaPartido" value="<%= jornada.partidos[j].fecha %>" required>
+                            <input type="date" class="form-control" name="partido[fecha][<%=j%>]" id="fechaPartido" value="<%= jornada[0].partidos[j].fecha %>" required>
                 </div>   
                 <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="horaPartido">Hora</label>
                             </div>
-                            <input type="datetime" class="form-control" name="partido[hora][j]" id="horaPartido" value='<%= jornada.partidos[j].hora %>' required><br>
+                            <input type="datetime" class="form-control" name="partido[hora][<%=j%>]" id="horaPartido" value='<%= jornada[0].partidos[j].hora %>' required><br>
                 </div>
             </div>
         <% } %>         

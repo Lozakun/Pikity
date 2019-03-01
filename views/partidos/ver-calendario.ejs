@@ -5,24 +5,28 @@
 <div class="row">
     <div class="col-md-12">
         <div class="container">
-            <label><%= liga.nombreLiga %></label>
+            
+            <h1>Calendario <%= liga.nombreLiga %></h1>
             <hr>
             <% liga.jornadas.forEach(jornada => { %>
-                <% for(let i = 0; i < jornada.partidos.length; i++){ %>
+                <div class="container">
                     <label>Jornada <%=jornada.numJornada%></label>
                     <br>
                     <% for(let j = 0; j < jornada.partidos.length; j++){ %>
                         <% let equipoLocal = liga.equipos.find(equipo => equipo.idEquipo == jornada.partidos[j].equipoLocal)%>
+                            <label id="fecha-calendario"><%= jornada.partidos[j].fecha %></label>
                             <label><%= equipoLocal.nombreEquipo %></label>
-                            <input type="number" value = "<%= jornada.partidos[j].golesLocal %>">
+                            <input id="marcador" type="number" value = "<%= jornada.partidos[j].golesLocal %>">
                         <% let equipoVisita = liga.equipos.find(equipo => equipo.idEquipo == jornada.partidos[j].equipoVisita) %>
-                            <input type="number" value = "<%= jornada.partidos[j].golesVisita %>">
+                            <input id="marcador" type="number" value = "<%= jornada.partidos[j].golesVisita %>">
                             <label><%= equipoVisita.nombreEquipo %></label>
                             <br><br>
-                    <% } %>            
+                            
                 <% } %>
+            </div>
             <% }); %>
             <a class="btn btn-success" href="/partidos/<%= liga.id %>">Agregar Jornada</a>
+            <a class="btn btn-warning" href="/partidos/<%= liga.id %>/editar-jornada">Editar Jornada</a>
         </div>
     </div>
 </div>

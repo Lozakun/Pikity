@@ -70,3 +70,12 @@ body{
     width: 100%;
 }
 
+#marcador{
+    width: 40px;
+}
+
+#fecha-calendario{
+    float: left;
+    padding-left: 20%;
+}
+

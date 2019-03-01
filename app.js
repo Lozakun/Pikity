@@ -115,9 +115,38 @@ app.post('/partidos/:idLiga/agregaJornada', (req, res, next)=>{
     res.render("partidos/ver-calendario", {path: 'ligas', ligas: ligas, ligaId: idLiga, jornada: jornada});
 });
 
-app.put('/partidos/:idLiga/editarJornada', (req, res, next)=>{
-    //vamos a ingresar aqui el guardado
-    //enviar a ruta de ver calendario
+app.get('/partidos/:idLiga/editar-jornada', (req, res, next)=>{
+    const idLiga = req.params.idLiga;
+    const liga = ligas.find(liga => liga.id == idLiga);
+    const jornada = liga.jornadas;
+    console.log(jornada);
+    res.render('partidos/editar-jornada', {path: 'ligas', liga: liga, ligaId: idLiga, jornada: jornada});
+});
+
+app.put('/partidos/:idLiga/editar-jornada/:numJornada', (req, res, next)=>{
+    const idLiga = req.params.idLiga;
+    const numJornada = req.params.numJornada;
+    const liga = ligas.find(liga => liga.id == idLiga);
+    const jornada = liga.jornadas.find(jornada => jornada.numJornada == numJornada);
+    const partidoAct = req.body.partido;
+    console.log(partidoAct);
+    // jornada.partidos.forEach(partido => {
+    //     if(partido != partidoAct){
+    //         partido = partido.map(partidoAct);
+    //     }
+    // });
+    for(let i = 0; i < jornada.partidos.length; i++){
+        if (jornada.partidos[i] != partidoAct[i]){
+            console.log("son diferentes", partidoAct.numJornada);
+            jornada.partidos[i].fecha = partidoAct.fecha[i];
+            jornada.partidos[i].hora = partidoAct.hora[i];
+            jornada.partidos[i].equipoLocal = partidoAct.equipoLocal[i];
+            jornada.partidos[i].equipoVisita = partidoAct.equipoVisita[i];
+        }else{
+            console.log("son iguales");
+        }
+    }
+    res.render("partidos/ver-calendario", {path: 'ligas', ligas: ligas, ligaId: idLiga, jornada: jornada});
 });
 
 app.get('/partidos/:idLiga/ver-calendario', (req, res, next)=>{
@@ -132,6 +161,6 @@ app.get('/quinielas', (req, res, next) => {
 });
 
 //app.listen(process.env.PORT, (err) => {
-app.listen(process.env.PORT || 4000, (err) => {
+app.listen(4000, (err) => {
     console.log("servidor escuchando");
 });
