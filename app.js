@@ -104,23 +104,25 @@ app.post('/partidos/:idLiga/agregaJornada', (req, res, next)=>{
     const idLiga = req.params.idLiga;
     const liga = ligas.find(liga=>liga.id == idLiga);
     const jornada = new Jornada(numJornada, idLiga);
-
-    for (let i = 0; i < req.body.partido.equipoLocal.length; i++){
-        const partido = new Partido(jornada.numJornada, idLiga, req.body.partido.fecha[i], req.body.partido.hora[i], req.body.partido.equipoLocal[i], req.body.partido.equipoVisita[i]);
-        console.log(partido);
-        jornada.partidos.push(partido);
+    const jornadaRep = liga.jornadas.find(jornada => jornada.numJornada == numJornada);
+    if(!jornadaRep){
+        for (let i = 0; i < req.body.partido.equipoLocal.length; i++){
+            const partido = new Partido(jornada.numJornada, idLiga, req.body.partido.fecha[i], req.body.partido.hora[i], req.body.partido.equipoLocal[i], req.body.partido.equipoVisita[i]);
+            console.log(partido);
+            jornada.partidos.push(partido);
+        }
+        liga.jornadas.push(jornada);
+        console.log(jornada);
     }
-    liga.jornadas.push(jornada);
-    console.log(jornada);
     res.render("partidos/ver-calendario", {path: 'ligas', ligas: ligas, ligaId: idLiga, jornada: jornada});
 });
 
-app.get('/partidos/:idLiga/editar-jornada', (req, res, next)=>{
+app.get('/partidos/:idLiga/editar-jornada/:numJornada', (req, res, next)=>{
     const idLiga = req.params.idLiga;
     const liga = ligas.find(liga => liga.id == idLiga);
-    const jornada = liga.jornadas;
-    console.log(jornada);
-    res.render('partidos/editar-jornada', {path: 'ligas', liga: liga, ligaId: idLiga, jornada: jornada});
+    const numJornada = req.params.numJornada;
+    const jornada = liga.jornadas.find(jornada => jornada.numJornada == numJornada);
+    res.render('partidos/editar-jornada', {path: 'ligas', liga: liga, ligaId: idLiga, jornada: jornada, numJornada: numJornada});
 });
 
 app.put('/partidos/:idLiga/editar-jornada/:numJornada', (req, res, next)=>{
@@ -160,7 +162,7 @@ app.get('/quinielas', (req, res, next) => {
     res.render('quinielas/quiniela', {path: 'quiniela', ligas: ligas});
 });
 
-//app.listen(process.env.PORT, (err) => {
-app.listen(4000, (err) => {
+app.listen(process.env.PORT, (err) => {
+// app.listen(4000, (err) => {
     console.log("servidor escuchando");
 });

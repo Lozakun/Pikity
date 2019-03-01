@@ -10,23 +10,25 @@
             <hr>
             <% liga.jornadas.forEach(jornada => { %>
                 <div class="container">
-                    <label>Jornada <%=jornada.numJornada%></label>
-                    <br>
-                    <% for(let j = 0; j < jornada.partidos.length; j++){ %>
-                        <% let equipoLocal = liga.equipos.find(equipo => equipo.idEquipo == jornada.partidos[j].equipoLocal)%>
-                            <label id="fecha-calendario"><%= jornada.partidos[j].fecha %></label>
-                            <label><%= equipoLocal.nombreEquipo %></label>
-                            <input id="marcador" type="number" value = "<%= jornada.partidos[j].golesLocal %>">
-                        <% let equipoVisita = liga.equipos.find(equipo => equipo.idEquipo == jornada.partidos[j].equipoVisita) %>
-                            <input id="marcador" type="number" value = "<%= jornada.partidos[j].golesVisita %>">
-                            <label><%= equipoVisita.nombreEquipo %></label>
-                            <br><br>
-                            
+                <label>Jornada <%=jornada.numJornada%></label>
+                <br>
+                <% for(let j = 0; j < jornada.partidos.length; j++){ %>
+                    <% let equipoLocal = liga.equipos.find(equipo => equipo.idEquipo == jornada.partidos[j].equipoLocal)%>
+                        <label id="fecha-calendario"><%= jornada.partidos[j].fecha %></label>
+                        <label><%= equipoLocal.nombreEquipo %></label>
+                        <input id="marcador" type="number" value = "<%= jornada.partidos[j].golesLocal %>">
+                    <% let equipoVisita = liga.equipos.find(equipo => equipo.idEquipo == jornada.partidos[j].equipoVisita) %>
+                        <input id="marcador" type="number" value = "<%= jornada.partidos[j].golesVisita %>">
+                        <label><%= equipoVisita.nombreEquipo %></label>
+                        <br>
                 <% } %>
-            </div>
+                    <a class="btn btn-warning" href="/partidos/<%= ligaId %>/editar-jornada/<%=jornada.numJornada%>" class="btn btn-warning">Editar Jornada</a>
+                    <br><br>
+                </div>
             <% }); %>
+            
             <a class="btn btn-success" href="/partidos/<%= liga.id %>">Agregar Jornada</a>
-            <a class="btn btn-warning" href="/partidos/<%= liga.id %>/editar-jornada">Editar Jornada</a>
+            
         </div>
     </div>
 </div>
