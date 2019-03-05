@@ -1,9 +1,7 @@
 <%- include('../includes/header') %>
 <%- include('../includes/navigation') %>
 
-<% console.log(ligaId) %>
-<% const result = ligas.find(liga => liga.id == ligaId); %>
-<% console.log(result.equipos.length) %>
+<% console.log("liga:", result) %>
 
 <div class="container">
     <div class="row">
@@ -13,7 +11,7 @@
                     <a href="/ligas/<%= result.id %>/equipos/agrega-equipo" class="btn btn-success">Agrega Equipos.</a>
                 <% } else { %>
                     <% if (result.equipos.length < result.numEquipos){ %>
-                        <a href="/ligas/<%= result.id %>/equipos/agrega-equipo" class="btn btn-warning">Agrega Equipos Restantes</a>
+                        <a href="/ligas/<%= result._id %>/equipos/agrega-equipo" class="btn btn-warning">Agrega Equipos Restantes</a>
                     <% } %>
                     <br>
                     <h2>Estadisticas de la <%= result.nombreLiga %></h2>
@@ -31,6 +29,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <% console.log("aqui: ", result.equipos) %>
                                 <% result.equipos.forEach(equipo=>{ %>
                                     <tr>
                                         <td><%= equipo.nombreEquipo %></td>
@@ -48,11 +47,11 @@
                 <% } %>
                 <% if(result.equipos.length > 0){ %>
                     <% if( result.jornadas.length > 0 ) { %>
-                        <a class="btn btn-success" href="/partidos/<%= result.id %>/ver-calendario">Calendario</a>
+                        <a class="btn btn-success" href="/partidos/<%= result._id %>/ver-calendario">Calendario</a>
                     <% } else { %>
-                        <a class="btn btn-success" href="/partidos/<%= result.id %>">Calendario</a>
+                        <a class="btn btn-success" href="/partidos/<%= result._id %>">Calendario</a>
                     <% } %>
-                    <a class="btn btn-warning" href="/partidos/<%= result.id %>/editar">Editar</a>
+                    <a class="btn btn-warning" href="/partidos/<%= result._id %>/editar">Editar</a>
                 <% } %>
                 
         </div>

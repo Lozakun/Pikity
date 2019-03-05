@@ -3,11 +3,10 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const app = express();
-const Liga = require('./models/liga.js');
 const ligas = [];
-const Equipo = require('./models/equipo.js');
-const Jornada = require('./models/jornada.js');
-const Partido = require('./models/partidos.js');
+const ligasRoutes = require('./routes/ligas.js');
+const partidosRoutes = require('./routes/partidos.js');
+const mongoose = require('mongoose');
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -16,153 +15,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'))
 
+app.use(ligasRoutes);
+// app.use('/partidos', partidosRoutes);
+
 app.get('/', (req, res, next) => {
     res.render('index', {path: 'index', ligas: ligas} );
-});
-
-app.get('/ligas', (req, res, next) => {
-    res.render('ligas/ligas', {ligas: ligas, path: 'ligas'});
-});
-
-app.post("/ligas", (req, res, next)=>{
-    const nombreLiga = req.body.nombreLiga;
-    const imagenUrl = req.body.imagenUrl;
-    const numEquipos = req.body.numeroEquipos;
-    const temp = req.body.temporada;
-    const liga = new Liga(nombreLiga, imagenUrl, numEquipos, temp);
-    ligas.push(liga);
-    res.redirect('/ligas');
-});
-
-app.get('/ligas/agrega-liga', (req, res, next) => {
-    console.log("cayo en agrega liga");
-    res.render('ligas/agrega-liga', {path: 'ligas', ligas: ligas});
-});
-
-app.get('/ligas/:id', (req, res, next) => {
-    const ligaId = req.params.id;
-    console.log("cayó en ver liga: ", ligaId);
-    res.render('ligas/ver-liga', {ligas: ligas, path: 'ligas', ligaId: ligaId});
-});
-
-app.get('ligas/:id/equipos', (req, res, next) =>{
-    console.log('Get de equipo individual');
-    res.render('equipos/equipos');
-});
-
-app.post('/ligas/:id/equipos', (req, res, next) =>{
-    console.log('Post de equipos de liga');
-    console.log(req.body.equipo);
-    const idLiga = req.params.id;
-    const liga = ligas.find(liga=>liga.id == idLiga);
-    
-    for(let i = 0; i < req.body.equipo.length; i++){
-        console.log(req.body.equipo[i]);
-        let equipo = new Equipo(req.body.equipo[i]);
-        liga.equipos.push(equipo);
-    }
-    console.log("se agregan equipos a Liga");
-
-    res.render('ligas/ver-liga', {ligas: ligas, path: 'ligas', ligaId: liga.id});
-});
-
-app.get('/ligas/:idLiga/equipos/agrega-equipo', (req, res, next) => {
-    console.log("agregar equipos aqui");
-    const liga = ligas.find(liga=>liga.id == req.params.idLiga);
-    res.render('equipos/agrega-equipos', {path: 'ligas', liga: liga});
-    console.log("equipos agregados!!");
-});
-
-app.get('/partidos/:idLiga/editar', (req, res, next)=>{
-    console.log(req.params.idLiga);
-    const liga = ligas.find(liga=>liga.id == req.params.idLiga);
-    res.render('equipos/edita-equipos',{ path: 'ligas', liga: liga});
-});
-
-app.put('/ligas/:idLiga/equipos/editar', (req, res, next)=>{
-    const idLiga = req.params.idLiga;
-    const liga = ligas.find(liga=>liga.id == idLiga);
-    console.log(req.body.equipo);
-    for(let i = 0; i < req.body.equipo.length; i++){
-        console.log(liga.equipos[i].nombreEquipo);
-        console.log(req.body.equipo[i]);
-        if (liga.equipos[i].nombreEquipo != req.body.equipo[i]){
-            liga.equipos[i].nombreEquipo = req.body.equipo[i];
-        }
-    }
-    res.render('ligas/ver-liga', {ligas: ligas, path: 'ligas', ligaId: idLiga});
-});
-
-app.get('/partidos/:id', (req, res, next)=>{
-    const ligaId = req.params.id;
-    res.render('partidos/agregar-partidos', {path: 'ligas', ligas: ligas, ligaId: ligaId});
-});
-
-app.post('/partidos/:idLiga/agregaJornada', (req, res, next)=>{
-    console.log("Entro al Post de Jornada");
-    const numJornada = req.body.partido.numJornada;
-    const idLiga = req.params.idLiga;
-    const liga = ligas.find(liga=>liga.id == idLiga);
-    const jornada = new Jornada(numJornada, idLiga);
-    const jornadaRep = liga.jornadas.find(jornada => jornada.numJornada == numJornada);
-    if(!jornadaRep){
-        for (let i = 0; i < req.body.partido.equipoLocal.length; i++){
-            const partido = new Partido(jornada.numJornada, idLiga, req.body.partido.fecha[i], req.body.partido.hora[i], req.body.partido.equipoLocal[i], req.body.partido.equipoVisita[i]);
-            console.log(partido);
-            jornada.partidos.push(partido);
-        }
-        liga.jornadas.push(jornada);
-        console.log(jornada);
-    }
-    res.render("partidos/ver-calendario", {path: 'ligas', ligas: ligas, ligaId: idLiga, jornada: jornada});
-});
-
-app.get('/partidos/:idLiga/editar-jornada/:numJornada', (req, res, next)=>{
-    const idLiga = req.params.idLiga;
-    const liga = ligas.find(liga => liga.id == idLiga);
-    const numJornada = req.params.numJornada;
-    const jornada = liga.jornadas.find(jornada => jornada.numJornada == numJornada);
-    res.render('partidos/editar-jornada', {path: 'ligas', liga: liga, ligaId: idLiga, jornada: jornada, numJornada: numJornada});
-});
-
-app.put('/partidos/:idLiga/editar-jornada/:numJornada', (req, res, next)=>{
-    const idLiga = req.params.idLiga;
-    const numJornada = req.params.numJornada;
-    const liga = ligas.find(liga => liga.id == idLiga);
-    const jornada = liga.jornadas.find(jornada => jornada.numJornada == numJornada);
-    const partidoAct = req.body.partido;
-    console.log(partidoAct);
-    // jornada.partidos.forEach(partido => {
-    //     if(partido != partidoAct){
-    //         partido = partido.map(partidoAct);
-    //     }
-    // });
-    for(let i = 0; i < jornada.partidos.length; i++){
-        if (jornada.partidos[i] != partidoAct[i]){
-            console.log("son diferentes", partidoAct.numJornada);
-            jornada.partidos[i].fecha = partidoAct.fecha[i];
-            jornada.partidos[i].hora = partidoAct.hora[i];
-            jornada.partidos[i].equipoLocal = partidoAct.equipoLocal[i];
-            jornada.partidos[i].equipoVisita = partidoAct.equipoVisita[i];
-        }else{
-            console.log("son iguales");
-        }
-    }
-    res.render("partidos/ver-calendario", {path: 'ligas', ligas: ligas, ligaId: idLiga, jornada: jornada});
-});
-
-app.get('/partidos/:idLiga/ver-calendario', (req, res, next)=>{
-    const idLiga = req.params.idLiga;
-    const liga = ligas.find(liga => liga.id == idLiga);
-    let jornada = liga.jornadas;
-    res.render('partidos/ver-calendario', {path: 'ligas', ligas: ligas, ligaId: idLiga, jornada: jornada});
 });
 
 app.get('/quinielas', (req, res, next) => {
     res.render('quinielas/quiniela', {path: 'quiniela', ligas: ligas});
 });
 
-app.listen(process.env.PORT, (err) => {
-// app.listen(4000, (err) => {
-    console.log("servidor escuchando");
+
+mongoose
+.connect('mongodb+srv://lozakun:Loza_Kun22@krenjar-y4wkt.gcp.mongodb.net/pikityDb?retryWrites=true')
+.then(result =>{
+    app.listen(process.env.PORT)
+    // app.listen(4000);
+    console.log("Servidor Escuchando...");
+})
+.catch(err => {
+    console.log(err);
 });
+
+
