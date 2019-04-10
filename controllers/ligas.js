@@ -116,3 +116,39 @@ exports.getAgregaEquipo = (req, res, next) => {
         console.log(err)
     });
 }
+
+exports.getEditaEquipos = (req, res, next)=>{
+    console.log("get Edita Equipo");
+    const idLiga = new mongoose.Types.ObjectId(req.params.idLiga);
+    Liga.findOne({"_id": idLiga})
+    .populate('equipos')
+    .exec()
+    .then(liga => {
+        console.log(liga);
+        res.render('equipos/edita-equipos',{ path: 'ligas', liga: liga})
+    })
+    .catch(err=> {
+        console.log(err)
+    });
+    
+}
+
+exports.postEditaEquipos = (req, res, next)=>{
+    const idLiga = new mongoose.Types.ObjectId(req.params.idLiga);
+    Liga.findOne({"_id": idLiga})
+    .populate('equipos')
+    .then(liga =>{
+        for(let i = 0; i < req.body.equipo.length; i++){
+            console.log(liga.equipos[i].nombreEquipo);
+            console.log(req.body.equipo[i]);
+            if (liga.equipos[i].nombreEquipo != req.body.equipo[i]){
+                liga.equipos[i].nombreEquipo = req.body.equipo[i];
+            }
+        }
+        res.render('ligas/ver-liga', {result: liga, path: 'ligas', ligaId: idLiga});
+    })
+    .catch(err => {
+        console.log(err);
+    });
+    
+}

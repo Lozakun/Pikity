@@ -13,9 +13,12 @@ const jornadaSchema = new Schema ({
     },
     partidos:[{
         type: mongoose.Schema.Types.ObjectId,
+        // type: Object
         ref:'Partido'
     }]
 });
+
+module.exports = mongoose.model('Jornada', jornadaSchema);
 
 // module.exports = class Jornada{
 //     constructor(numJornada, liga){

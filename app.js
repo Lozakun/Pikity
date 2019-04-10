@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'))
 
 app.use(ligasRoutes);
-// app.use('/partidos', partidosRoutes);
+app.use('/partidos', partidosRoutes);
 
 app.get('/', (req, res, next) => {
     res.render('index', {path: 'index', ligas: ligas} );
@@ -31,7 +31,7 @@ mongoose
 .connect('mongodb+srv://lozakun:Loza_Kun22@krenjar-y4wkt.gcp.mongodb.net/pikityDb?retryWrites=true')
 .then(result =>{
     app.listen(process.env.PORT)
-    // app.listen(4000);
+    //app.listen(4000);
     console.log("Servidor Escuchando...");
 })
 .catch(err => {

@@ -1,5 +1,4 @@
-const mongoose = require('mongoose'),
-Equipo = require('./equipo');
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 

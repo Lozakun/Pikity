@@ -1,25 +1,29 @@
 <%- include('../includes/header') %>
 <%- include('../includes/navigation') %>
 
-<% const liga = ligas.find(liga => liga.id == ligaId); %>
+<% console.log("liga:" + liga) %>
+<% console.log("jornada:" + jornada) %>
+
 <div class="row">
     <div class="col-md-12">
         <div class="container">
             
             <h1>Calendario <%= liga.nombreLiga %></h1>
             <hr>
-            <% liga.jornadas.forEach(jornada => { %>
+            <% liga.jornadas.forEach(jor => { %>
                 <div class="container">
-                <label>Jornada <%=jornada.numJornada%></label>
+                <label>Jornada <%=jor.numJornada%></label>
                 <br>
-                <% for(let j = 0; j < jornada.partidos.length; j++){ %>
-                    <% let equipoLocal = liga.equipos.find(equipo => equipo.idEquipo == jornada.partidos[j].equipoLocal)%>
-                        <label id="fecha-calendario"><%= jornada.partidos[j].fecha %></label>
-                        <label><%= equipoLocal.nombreEquipo %></label>
-                        <input id="marcador" type="number" value = "<%= jornada.partidos[j].golesLocal %>">
-                    <% let equipoVisita = liga.equipos.find(equipo => equipo.idEquipo == jornada.partidos[j].equipoVisita) %>
-                        <input id="marcador" type="number" value = "<%= jornada.partidos[j].golesVisita %>">
-                        <label><%= equipoVisita.nombreEquipo %></label>
+                <% for(let j = 0; j < jor.partidos.length; j++){ %>
+                    <% console.log("local: " + jornada[j]); %>
+                    <% let jorna = jornada.find(jorna => jorna._id = jor._id)%>
+                        <label id="fecha-calendario"><%= jorna.partidos[j].fecha.toDateString() %></label>
+                        <label><%= jorna.partidos[j].equipoLocal %></label>
+                        <input id="marcador" type="number" value = "<%= jorna.partidos[j].golesLocal %>">
+                        <% console.log(jorna.partidos[j].equipoVisita); %>
+                    <% let equipoVisita = liga.equipos.find(equipo => equipo._id == jor.partidos[j].equipoVisita) %>
+                        <input id="marcador" type="number" value = "<%= jorna.partidos[j].golesVisita %>">
+                        <label><%= jorna.partidos[j].equipoVisita %></label>
                         <br>
                 <% } %>
                     <a class="btn btn-warning" href="/partidos/<%= ligaId %>/editar-jornada/<%=jornada.numJornada%>" class="btn btn-warning">Editar Jornada</a>
@@ -27,7 +31,7 @@
                 </div>
             <% }); %>
             
-            <a class="btn btn-success" href="/partidos/<%= liga.id %>">Agregar Jornada</a>
+            <a class="btn btn-success" href="/partidos/<%= liga._id %>">Agregar Jornada</a>
             
         </div>
     </div>

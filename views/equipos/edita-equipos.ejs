@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row" id="AgregarEquiposRow">
         <div class="col-sm-4" id="form-equipos">
-            <form class="form-group" action="/ligas/<%= liga.id %>/equipos/editar?_method=PUT" method="POST">
+            <form class="form-group" action="/ligas/<%= liga._id %>/equipos/editar?_method=PUT" method="POST">
                     <% for(let i = 0; i < liga.numEquipos; i++){ %>
                         <div class="input-group mb-3">
                                 <div class="input-group-prepend">

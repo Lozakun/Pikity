@@ -9,8 +9,7 @@
     </div>
     <div class="row" id="AgregarEquiposRow">
         <div class="container col-md-4">
-            <% const liga = ligas.find(liga=>liga.id == ligaId); %>
-            <form id="form-group" action='/partidos/<%= liga.id %>/agregaJornada' method="POST">
+            <form id="form-group" action='/partidos/<%= liga._id %>/agregaJornada' method="POST">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputJornada">Jornada</label>
@@ -32,7 +31,7 @@
                             </div>
                             <select name="partido[equipoLocal]" class="custom-select" id="EquipoLocal">
                                 <% liga.equipos.forEach(equipo=>{ %>
-                                    <option value="<%= equipo.idEquipo %>"><%= equipo.nombreEquipo %></option>
+                                    <option value="<%= equipo._id %>"><%= equipo.nombreEquipo %></option>
                                 <% }); %>
                             </select>
                 </div>
@@ -42,7 +41,7 @@
                             </div>
                             <select name="partido[equipoVisita]" class="custom-select" id="EquipoVisita">
                                 <% liga.equipos.forEach(equipo=>{ %>
-                                    <option value="<%= equipo.idEquipo %>""><%= equipo.nombreEquipo %></option>
+                                    <option value="<%= equipo._id %>""><%= equipo.nombreEquipo %></option>
                                 <% }); %>
                             </select>
                 </div>
@@ -56,8 +55,14 @@
                             <div class="input-group-prepend">
                                 <label class="input-group-text" for="horaPartido">Hora</label>
                             </div>
-                            <input type="datetime" class="form-control" name="partido[hora]" id="horaPartido" required><br>
+                            <input type="number" class="form-control" name="partido[hora]" id="horaPartido" min="0" max="23" required><br>
                 </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="minutosPartido">Minutos</label>
+                    </div>
+                    <input type="number" class="form-control" name="partido[minutos]" id="minutosPartido" min="0" max="59" required><br>
+        </div>
             </div>
         <% } %>         
     </div>
