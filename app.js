@@ -30,8 +30,8 @@ app.get('/quinielas', (req, res, next) => {
 mongoose
 .connect('mongodb+srv://lozakun:Loza_Kun22@krenjar-y4wkt.gcp.mongodb.net/pikityDb?retryWrites=true')
 .then(result =>{
-    app.listen(process.env.PORT)
-    //app.listen(4000);
+    // app.listen(process.env.PORT)
+    app.listen(4000);
     console.log("Servidor Escuchando...");
 })
 .catch(err => {

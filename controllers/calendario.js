@@ -10,12 +10,13 @@ exports.getVerCalendario = (req, res, next)=>{
     .populate('equipos')
     .populate('jornadas')
     .populate('jornadas.partidos')
-    .populate('jornadas.partidos.equipoLocal')
+    .populate('jornadas.partidos.equipoLocal.nombreEquipo')
     .then(liga => {
         Jornada.find({"liga": liga._id})
         .populate('partidos')
+        .populate('partidos.equipoLocal.nombreEquipo')
+        .populate('partidos.equipoVisita.nombreEquipo')
         // .populate('nombreEquipo')
-        .exec()
         .then(jornada =>{
             res.render('../views/partidos/ver-calendario', {path: 'ligas', liga: liga, ligaId: idLiga, jornada: jornada});
         })
@@ -53,10 +54,11 @@ exports.postAgregarPartidos = (req, res, next)=>{
 
     guardaLiga(req, jornada.numJornada, idLiga)
     .then(results => {
-        console.log("then 7 liga:" + results.liga + "jornada: "+ results.jor);
-        res.render("../views/partidos/ver-calendario", {path: 'ligas', liga: results.liga, ligaId: idLiga, jornada: results.jor})
+        console.log("then 7 liga:" + results.liga._id + " jornada: "+ results.jor);
+        // res.render("../views/partidos/ver-calendario", {path: 'ligas', liga: results.liga, ligaId: idLiga, jornada: results.liga.jornadas});
+        res.render('../views/partidos/ver-calendario', {path: 'ligas', liga: results.liga, ligaId: results.liga._id, jornada: results.jor});
     })
-    .catch(err=>console.log("error: ", err));
+    .catch(err=>console.log("Falló: "+ err));
 
     async function guardaLiga(req, numJornada, idLiga){
         this.idLiga = idLiga;
@@ -68,10 +70,12 @@ exports.postAgregarPartidos = (req, res, next)=>{
         const jornadaGuardada = await guardaJornada(partidosGuardados);
         const ligaActualizada = await actualizaLiga(ligaEncontrada, jornadaGuardada);
         const jornadaEncontrada = await encuentraJornada(jornadaGuardada);
+        const LigaActEncontrada = await encuentraLigaActualizada(idLiga);
+        const jornadas = await encuentraJornadas(idLiga);
 
         return {
-            liga: ligaActualizada,
-            jor: jornadaEncontrada
+            liga: LigaActEncontrada,
+            jor: jornadas
         }
         
         function encuentraLiga() {
@@ -84,7 +88,7 @@ exports.postAgregarPartidos = (req, res, next)=>{
         
         function guardaPartido(){
                 if(ligaEncontrada.jornadas.length === 0 || (ligaEncontrada.jornadas.filter(lig=>{lig.numJornada = numJornada}).length === 0)){
-                    console.log("llego ", req.body.partido);
+                    console.log("llego ", ligaEncontrada.jornadas.filter(lig=>{lig.numJornada = numJornada}).length + " numJornada: " + numJornada);
                     for(let i = 0; i < req.body.partido.equipoLocal.length; i++) {
                         const partido = new Partido({
                             numJornada: req.body.partido.numJornada,
@@ -99,7 +103,7 @@ exports.postAgregarPartidos = (req, res, next)=>{
                         partido.save();
                         partidos.push(new mongoose.Types.ObjectId(partido._id));
                     }
-            }
+                }
             return partidos;
         }
     
@@ -126,6 +130,22 @@ exports.postAgregarPartidos = (req, res, next)=>{
             const jornadaEncontrada = Jornada.findOne({"_id":jornadaGuardada._id})
             .populate('partidos')
             return jornadaEncontrada;
+        }
+
+        function encuentraLigaActualizada(idLiga) {
+            const liga = Liga.findOne({"_id": idLiga})
+            .populate('equipos')
+            .populate('jornadas')
+            .populate('jornadas.partidos');
+            return liga;
+        }
+
+        function encuentraJornadas(idLiga){
+            const jornadas = Jornada.find({"liga": idLiga})
+            .populate('partidos')
+            .populate('partidos.equipoLocal.nombreEquipo')
+            .populate('partidos.equipoVisita.nombreEquipo')
+            return jornadas;
         }
     }
 }
