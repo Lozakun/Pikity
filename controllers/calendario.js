@@ -18,7 +18,14 @@ exports.getVerCalendario = (req, res, next)=>{
         .populate('partidos.equipoVisita.nombreEquipo')
         // .populate('nombreEquipo')
         .then(jornada =>{
-            res.render('../views/partidos/ver-calendario', {path: 'ligas', liga: liga, ligaId: idLiga, jornada: jornada});
+            res.render('../views/partidos/ver-calendario', 
+            {
+                path: 'ligas', 
+                liga: liga, 
+                ligaId: idLiga, 
+                jornada: jornada,
+                isAuthenticated: req.isLoggedIn
+            });
         })
     })
     .catch(err => {
@@ -32,7 +39,13 @@ exports.getAgregaPartidos = (req, res, next)=>{
     .populate('equipos')
     .then(liga => {
         console.log(liga);
-        res.render('../views/partidos/agregar-partidos', {path: 'ligas', liga: liga, ligaId: ligaId});
+        res.render('../views/partidos/agregar-partidos', 
+        {
+            path: 'ligas', 
+            liga: liga, 
+            ligaId: ligaId,
+            isAuthenticated: req.isLoggedIn
+        });
     })
     .catch(err => {
         console.log(err);
@@ -56,7 +69,14 @@ exports.postAgregarPartidos = (req, res, next)=>{
     .then(results => {
         console.log("then 7 liga:" + results.liga._id + " jornada: "+ results.jor);
         // res.render("../views/partidos/ver-calendario", {path: 'ligas', liga: results.liga, ligaId: idLiga, jornada: results.liga.jornadas});
-        res.render('../views/partidos/ver-calendario', {path: 'ligas', liga: results.liga, ligaId: results.liga._id, jornada: results.jor});
+        res.render('../views/partidos/ver-calendario', 
+        {
+            path: 'ligas', 
+            liga: results.liga, 
+            ligaId: results.liga._id, 
+            jornada: results.jor,
+            isAuthenticated: req.isLoggedIn
+        });
     })
     .catch(err=>console.log("Falló: "+ err));
 

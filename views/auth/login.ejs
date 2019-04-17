@@ -1,0 +1,34 @@
+<%- include('../includes/header') %>
+<%- include('../includes/navigation') %>
+
+<div class="container">
+    <div class="row" id="AgregarEquiposRow">
+        <div class="col-sm-4" id="form-login">
+        <br>
+        <h1>Login</h1>
+        <br><br>
+            <div class="agregar-liga">
+                <form class="form-group" action="/login" method="POST">
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="email">Email</span>
+                            </div>
+                            <input class="form-control" type="email" name="email" aria-describedby="email" required>
+                        </div>
+            
+                        <div class="input-group mb-3">        
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="password">Password</span>
+                                </div>
+                                <input class="form-control" type="password" name="password" aria-describedby="password" required>
+                        </div>
+
+                        <input class="btn btn-success" type="submit" value="Ingresa">
+                    </div>
+                </form>     
+            </div>
+    </div>
+</div>
+
+<%- include('../includes/footer') %>

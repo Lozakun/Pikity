@@ -6,7 +6,12 @@ exports.muestraLigas = (req, res, next) => {
     Liga.find({})
     .then(ligas =>{
         console.log(ligas);
-        res.render('ligas/ligas', {ligas: ligas, path: 'ligas'});
+        res.render('ligas/ligas', 
+        {
+            ligas: ligas, 
+            path: 'ligas',
+            isAuthenticated: req.isLoggedIn
+        });
     })
     .catch(err => {
         console.log(err);
@@ -16,7 +21,12 @@ exports.muestraLigas = (req, res, next) => {
 
 exports.getAgregaLiga = (req, res, next) => {
     console.log("cayo en agrega liga");
-    res.render('ligas/agrega-liga', {path: 'ligas', ligas: Liga});
+    res.render('ligas/agrega-liga', 
+    {
+        path: 'ligas', 
+        ligas: Liga,
+        isAuthenticated: req.isLoggedIn
+    });
 }
 
 exports.postAgregaLiga = (req, res, next)=>{
@@ -48,7 +58,13 @@ exports.getLiga = (req, res, next) => {
     Liga.findById(ligaId).populate('equipos').exec()
     .then(result =>{
         console.log(result);
-        res.render('ligas/ver-liga', {result: result, path: 'ligas', ligaId: ligaId});
+        res.render('ligas/ver-liga', 
+        {
+            result: result, 
+            path: 'ligas', 
+            ligaId: ligaId,
+            isAuthenticated: req.isLoggedIn
+        });
     })
     .catch(err => {
         console.log(err);
@@ -94,7 +110,6 @@ exports.postAgregaEquipos = (req, res, next) =>{
         return liga;
     })
     .then(liga => {
-        // res.render('../views/ligas/ver-liga', {result: liga, path: 'ligas', ligaId: liga._id});
         res.redirect('/ligas/'+ liga._id);
         console.log("Equipos agregados a Liga", liga);
     })
@@ -109,7 +124,12 @@ exports.getAgregaEquipo = (req, res, next) => {
     console.log("agregar equipos aqui");
     const liga = Liga.findOne({"_id": mongoose.Types.ObjectId(req.params.idLiga)})
     .then(result => {
-        res.render('equipos/agrega-equipos', {path: 'ligas', liga: result});
+        res.render('equipos/agrega-equipos', 
+        {
+            path: 'ligas', 
+            liga: result,
+            isAuthenticated: req.isLoggedIn
+        });
         console.log(result);
     })
     .catch(err => {
@@ -125,7 +145,12 @@ exports.getEditaEquipos = (req, res, next)=>{
     .exec()
     .then(liga => {
         console.log(liga);
-        res.render('equipos/edita-equipos',{ path: 'ligas', liga: liga})
+        res.render('equipos/edita-equipos',
+        {
+            path: 'ligas', 
+            liga: liga,
+            isAuthenticated: req.isLoggedIn
+        })
     })
     .catch(err=> {
         console.log(err)
@@ -145,7 +170,13 @@ exports.postEditaEquipos = (req, res, next)=>{
                 liga.equipos[i].nombreEquipo = req.body.equipo[i];
             }
         }
-        res.render('ligas/ver-liga', {result: liga, path: 'ligas', ligaId: idLiga});
+        res.render('ligas/ver-liga', 
+        {
+            result: liga, 
+            path: 'ligas', 
+            ligaId: idLiga,
+            isAuthenticated: req.isLoggedIn
+        });
     })
     .catch(err => {
         console.log(err);

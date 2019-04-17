@@ -8,8 +8,15 @@
             <div class="navbar-nav">
             <a class="nav-item nav-link <% if(path === 'index'){ %>active<% } else { %>disable<% } %>" href="/">Home <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link <% if(path === 'ligas'){ %>active<% } else { %>disable<% } %>" href="/ligas">Ligas</a>
-            <a class="nav-item nav-link <% if(path === 'quinielas'){ %>active<% } else { %>disable<% } %>" href="/quiniela">Quinielas</a>
+            <% if(isAuthenticated){ %>
+                <a class="nav-item nav-link <% if(path === 'quinielas'){ %>active<% } else { %>disable<% } %>" href="/quiniela">Quinielas</a>
+            <% } %>
             </div>
+            <ul class="main-header__item-list">
+                <li class="main-header__item">
+                    <a class="nav-item nav-link <% if(path === 'login'){ %>active<% } else { %>disable<% } %>"href="/login">Login</a>
+                </ul>
+            </ul>
         </div>
     </nav>
 </div>

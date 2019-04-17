@@ -79,3 +79,11 @@ body{
     padding-left: 20%;
 }
 
+.main-header__item-list{
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between;
+}
+
